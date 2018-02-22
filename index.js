@@ -1,4 +1,4 @@
-require("./logger");
+import { Logger } from "./logger";
 
 const enums = require("./enums");
 
