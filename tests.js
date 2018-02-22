@@ -1,9 +1,8 @@
 const main = require("./index");
 
-var logger = main.GetLogger('Salesforce', "blue", 0);
+var logger = main.GetLogger();
 
 logger.log("Testovaci log");
-
 logger.logTrace("TRACE log");
 logger.logDebug("DEBUG log");
 logger.logInfo("INFO log");
