@@ -8,12 +8,28 @@ var internLogger = new loggerModule.Logger(helper.colorText("Logger", [enums.spe
 
 var loggers = [];
 
-exports.GetLogger = (namespace = options.defaultNamespace, color = 'white', minLevelToLog = enums.logLevel.trace) => {
+exports.CreateLogger = (namespace, args, minLevelToLog = enums.logLevel.trace) => {
+    var resultLogger = loggers[namespace.toLowerCase()];
+
+    if(resultLogger){
+        internLogger.logWarning("Logger " + namespace + " already exist!");
+        return resultLogger;
+    }
+
+    var modificateNamespace = helper.colorText(namespace, args);
+
+    resultLogger = new loggerModule.Logger(modificateNamespace, minLevelToLog);
+    loggers[namespace.toLowerCase()] = resultLogger;
+    return resultLogger;
+}
+
+exports.GetLogger = (namespace = options.defaultNamespace, minLevelToLog = enums.logLevel.trace) => {
     var resultLogger = loggers[namespace.toLowerCase()];
 
     if (!resultLogger) {
+        internLogger.logWarning("Logger " + namespace + " doesn't exist!");        
         resultLogger = new loggerModule.Logger(namespace, minLevelToLog);
-        loggers[namespace] = resultLogger;
+        loggers[namespace.toLowerCase()] = resultLogger;
     }
 
     return resultLogger;
