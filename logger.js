@@ -1,5 +1,4 @@
 const enums = require("./enums");
-const options = require("./options");
 const helper = require("./helper");
 const defaultMethods = require("./loggerDefaultMethod");
 
@@ -8,7 +7,7 @@ exports.Logger = Logger;
 /* ************************************************** */
 
 /* LOGGER main class */
-function Logger(namespace, minLevelToLog = enums.logLevel.info) {
+function Logger(namespace, minLevelToLog = enums.logLevel.trace) {
     this.namespace = namespace;
     this.minLevelToLog = minLevelToLog;
     this.prefixMethod = defaultMethods.prefix;

@@ -1,5 +1,4 @@
 const enums = require("./enums");
-const options = require("./options");
 const loggerModule = require("./logger");
 const helper = require('./helper');
 
@@ -7,10 +6,10 @@ exports.Logger = internLogger;
 var internLogger = new loggerModule.Logger(helper.colorText("Logger", [enums.specials.reverse]), enums.logLevel.info);
 
 var loggers = [];
-loggers[options.defaultNamespace.toLowerCase()] = new loggerModule.Logger(options.defaultNamespace);
+loggers[undefined] = new loggerModule.Logger();
 
 exports.CreateLogger = (namespace, args, minLevelToLog = enums.logLevel.trace) => {
-    var resultLogger = loggers[namespace.toLowerCase()];
+    var resultLogger = loggers[namespace];
 
     if(resultLogger){
         internLogger.logWarning("Logger " + namespace + " already exist!");
@@ -20,17 +19,17 @@ exports.CreateLogger = (namespace, args, minLevelToLog = enums.logLevel.trace) =
     var modificateNamespace = helper.colorText(namespace, args);
 
     resultLogger = new loggerModule.Logger(modificateNamespace, minLevelToLog);
-    loggers[namespace.toLowerCase()] = resultLogger;
+    loggers[namespace] = resultLogger;
     return resultLogger;
 }
 
-exports.GetLogger = (namespace = options.defaultNamespace, minLevelToLog = enums.logLevel.trace) => {
-    var resultLogger = loggers[namespace.toLowerCase()];
+exports.GetLogger = (namespace, minLevelToLog = enums.logLevel.trace) => {
+    var resultLogger = loggers[namespace];
 
     if (!resultLogger) {
         internLogger.logWarning("Logger " + namespace + " doesn't exist!");        
         resultLogger = new loggerModule.Logger(namespace, minLevelToLog);
-        loggers[namespace.toLowerCase()] = resultLogger;
+        loggers[namespace] = resultLogger;
     }
 
     return resultLogger;

@@ -4,7 +4,7 @@ const helper = require("./helper");
 const enums = require("./enums");
 
 var logger = main.CreateLogger("O365", [main.GetFgColor('red')]);
-var logger2 = main.GetLogger("O365");
+var logger2 = main.GetLogger();
 
 console.log("**** START TESTS ****");
 logAll(logger);

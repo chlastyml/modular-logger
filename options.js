@@ -1,1 +1,0 @@
-exports.defaultNamespace = "24b20546";
