@@ -1,8 +1,10 @@
 require("./logger");
 
+const enums = require("./enums");
+
 var loggers = [];
 
-exports.GetLogger = (namespace, color = 'white', minLevelToLog = logLevel.info) => {
+exports.GetLogger = (namespace, color = 'white', minLevelToLog = enums.logLevel.info) => {
     var resultLogger = loggers[namespace.toLowerCase()];
 
     if (!resultLogger) {

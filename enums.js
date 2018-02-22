@@ -1,5 +1,16 @@
 var Enum = require('enum');
 
+exports.logLevel = new Enum({
+    'trace': 0,
+    'debug': 1,
+    'info': 2,
+    'warning': 3,
+    'error': 4
+}, {
+    name: "logLevel",
+    ignoreCase: true
+});
+
 exports.colorReset = "\x1b[0m";
 exports.specials = new Enum({
     'bright': "\x1b[1m",
