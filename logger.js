@@ -16,10 +16,15 @@ function Logger(namespace, minLevelToLog = enums.logLevel.trace) {
 /* ************************************************** */
 
 /* Set methods */
-Logger.prototype.setLogMethod = (newLogMethod) => {
+Logger.prototype.setMinLevelLog = function (minLevelLogInput) {
+    var minLevelLog = enums.convertLevelLog(minLevelLogInput);
+    this.minLevelToLog = minLevelLog;
+}
+
+Logger.prototype.setLogMethod = function (newLogMethod) {
     this.logMethod = newLogMethod;
 }
-Logger.prototype.setPrefixMethod = (newPrefixMethod) => {
+Logger.prototype.setPrefixMethod = function (newPrefixMethod) {
     this.prefixMethod = newPrefixMethod;
 }
 /* ************************************************** */

@@ -1,4 +1,5 @@
 var Enum = require('enum');
+var main = require('./index');
 
 exports.logLevel = new Enum({
     'trace': 0,
@@ -20,6 +21,7 @@ exports.specials = new Enum({
     'reverse': "\x1b[7m",
     'hidden': "\x1b[8m"
 }, {
+    name: "Specials",
     ignoreCase: true
 });
 exports.fgColors = new Enum({
@@ -32,6 +34,7 @@ exports.fgColors = new Enum({
     'cyan': "\x1b[36m",
     'white': "\x1b[37m"
 }, {
+    name: "FgColors",
     ignoreCase: true
 });
 exports.bgColors = new Enum({
@@ -44,5 +47,32 @@ exports.bgColors = new Enum({
     'cyan': "\x1b[46m",
     'white': "\x1b[47m"
 }, {
+    name: "BgColors",
     ignoreCase: true
 });
+
+exports.convertLevelLog = (input) => {
+    var result = convertEnum(input, this.logLevel);
+    return result ? result : this.logLevel.trace;
+}
+exports.convertFgColors = (input) => {
+    var result = convertEnum(input, this.fgColors);
+    return result ? result : "";
+}
+exports.convertBgColors = (input) => {
+    var result =  convertEnum(input, this.bgColors);
+    return result ? result : "";
+}
+exports.convertSpecials = (input) => {
+    var result =  convertEnum(input, this.specials);
+    return result ? result : "";
+}
+
+function convertEnum(input, enumInput){
+    var result = enumInput.get(input);
+    if(!result){
+        main.Logger.logWarning(input + " not found in " + enumInput.name + " enum");
+    }
+
+    return result;
+}

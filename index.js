@@ -2,24 +2,25 @@ const enums = require("./enums");
 const loggerModule = require("./logger");
 const helper = require('./helper');
 
-exports.Logger = internLogger;
-var internLogger = new loggerModule.Logger(helper.colorText("Logger", [enums.specials.reverse]), enums.logLevel.info);
-
 var loggers = [];
-loggers[undefined] = new loggerModule.Logger();
+exports.Logger =  new loggerModule.Logger(helper.colorText("Logger", [enums.specials.reverse]), enums.logLevel.info);
 
 exports.CreateLogger = (namespace, args, minLevelToLog = enums.logLevel.trace) => {
     var resultLogger = loggers[namespace];
 
     if(resultLogger){
-        internLogger.logWarning("Logger " + namespace + " already exist!");
+        this.Logger.logWarning("Logger " + namespace + " already exist!");
         return resultLogger;
     }
 
     var modificateNamespace = helper.colorText(namespace, args);
 
+    //console.log(modificateNamespace, minLevelToLog)
     resultLogger = new loggerModule.Logger(modificateNamespace, minLevelToLog);
     loggers[namespace] = resultLogger;
+
+    this.Logger.logTrace("Logger created: " + namespace);
+
     return resultLogger;
 }
 
@@ -27,7 +28,7 @@ exports.GetLogger = (namespace, minLevelToLog = enums.logLevel.trace) => {
     var resultLogger = loggers[namespace];
 
     if (!resultLogger) {
-        internLogger.logWarning("Logger " + namespace + " doesn't exist!");        
+        this.Logger.logWarning("Logger " + namespace + " doesn't exist!");        
         resultLogger = new loggerModule.Logger(namespace, minLevelToLog);
         loggers[namespace] = resultLogger;
     }
@@ -38,7 +39,7 @@ exports.GetLogger = (namespace, minLevelToLog = enums.logLevel.trace) => {
 exports.GetFgColor = (colorString) => {
     var color = enums.fgColors.get(colorString);
     if (!color) {
-        internLogger.logWarning("Color " + colorString + " not found!");
+        this.Logger.logWarning("Color " + colorString + " not found!");
         return "";
     }
     return color;
@@ -46,7 +47,7 @@ exports.GetFgColor = (colorString) => {
 exports.GetBgColor = (colorString) => {
     var color = enums.bgColors.get(colorString);
     if (!color) {
-        internLogger.logWarning("Color " + colorString + " not found!");
+        this.Logger.logWarning("Color " + colorString + " not found!");
         return "";
     }
     return color;
@@ -54,8 +55,10 @@ exports.GetBgColor = (colorString) => {
 exports.GetSpecial = (specialString) => {
     var color = enums.specials.get(specialString);
     if (!color) {
-        internLogger.logWarning("Modificator " + specialString + " not found!");
+        this.Logger.logWarning("Modificator " + specialString + " not found!");
         return "";
     }
     return color;
 }
+
+loggers[undefined] = this.CreateLogger(undefined, []);
