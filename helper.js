@@ -35,9 +35,9 @@ exports.getModificatorsForLevel = (level) => {
         case enums.logLevel.info:
             return [enums.fgColors.green];
         case enums.logLevel.warning:
-            return [enums.fgColors.black, enums.bgColors.yellow];
+            return [enums.bgColors.yellow];
         case enums.logLevel.error:
-            return [enums.fgColors.black, enums.bgColors.red, enums.specials.bright];
+            return [enums.bgColors.red, enums.specials.bright];
     }
 
     console.log("Error pri ziskavani modifikatoru textu u loggeru");
