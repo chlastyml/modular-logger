@@ -6,7 +6,7 @@ exports.prefix = (level, namespace, color) => {
     var levelComplete = helper.colorText(helper.samelength(level.key), helper.getModificatorsForLevel(level));
     var datetime = helper.buildDatetime();
 
-    var text = namespace == options.defaultNamespace ? helper.buildPrefix([levelComplete, datetime]) : helper.buildPrefix([namespaceComplete, levelComplete, datetime]);
+    var text = namespace == options.defaultNamespace ? helper.buildPrefix([levelComplete, datetime]) : helper.buildPrefix([levelComplete, namespaceComplete, datetime]);
 
     return text + " - ";
 }
