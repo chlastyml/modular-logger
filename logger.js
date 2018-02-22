@@ -1,7 +1,5 @@
 const enums = require("./enums");
 
-exports.Logger = Logger;
-
 /* Enums */
 
 var logLevel = enums.logLevel;
@@ -11,42 +9,80 @@ var fgColors = enums.fgColors;
 var bgColors = enums.bgColors;
 
 /* PRIVATE */
+module.exports = class Logger{
+    constructor(namespace, color, minLevelToLog = logLevel.info) {
+        this.namespace = namespace;
+        this.minLevelToLog = minLevelToLog;
+        this.color = convertColor(color);
+        this.prefixText = prefix;
+        this.logMethod = (prefix, text) => {
+            console.log(prefix + text);
+        };
+    }
 
-function Logger(namespace, color, minLevelToLog = logLevel.info) {
-    this.namespace = namespace;
-    this.minLevelToLog = minLevelToLog;
-    this.color = convertColor(color);
-    this.prefixText = prefix;
-    this.logMethod = (prefix, text) => {
-        console.log(prefix + text);
-    };
+    log(logText, level = logLevel.info){
+        return new Promise((resolve, reject) => {
+            if (this.minLevelToLog <= level) {
+                var prefixText = this.prefix(level, this.namespace, this.color);
+                this.logMethod(prefixText + logText);
+            }
+            resolve(true);
+        });
+    }
+
+    logTrace (text) {
+        return this.log(text, logLevel.trace)
+    }
+    logDebug (text) {
+        return this.log(text, logLevel.debug)
+    }
+    logInfo (text) {
+        return this.log(text, logLevel.info)
+    }
+    logWarning (text) {
+        return this.log(text, logLevel.warning)
+    }
+    logError (text) {
+        return this.log(text, logLevel.error)
+    }
+
 }
 
-Logger.prototype.log = function (logText, level = logLevel.info) {
-    return new Promise((resolve, reject) => {
-        if (this.minLevelToLog <= level) {
-            var prefixText = this.prefix(level, this.namespace, this.color);
-            this.logMethod(prefixText + logText);
-        }
-        resolve(true);
-    });
-}
+// exports.Logger = (namespace, color, minLevelToLog = logLevel.info) => {
+//     this.namespace = namespace;
+//     this.minLevelToLog = minLevelToLog;
+//     this.color = convertColor(color);
+//     this.prefixText = prefix;
+//     this.logMethod = (prefix, text) => {
+//         console.log(prefix + text);
+//     };
+// }
 
-Logger.prototype.logTrace = function (text) {
-    return this.log(text, logLevel.trace)
-}
-Logger.prototype.logDebug = function (text) {
-    return this.log(text, logLevel.debug)
-}
-Logger.prototype.logInfo = function (text) {
-    return this.log(text, logLevel.info)
-}
-Logger.prototype.logWarning = function (text) {
-    return this.log(text, logLevel.warning)
-}
-Logger.prototype.logError = function (text) {
-    return this.log(text, logLevel.error)
-}
+// Logger.prototype.log = function (logText, level = logLevel.info) {
+//     return new Promise((resolve, reject) => {
+//         if (this.minLevelToLog <= level) {
+//             var prefixText = this.prefix(level, this.namespace, this.color);
+//             this.logMethod(prefixText + logText);
+//         }
+//         resolve(true);
+//     });
+// }
+
+// Logger.prototype.logTrace = function (text) {
+//     return this.log(text, logLevel.trace)
+// }
+// Logger.prototype.logDebug = function (text) {
+//     return this.log(text, logLevel.debug)
+// }
+// Logger.prototype.logInfo = function (text) {
+//     return this.log(text, logLevel.info)
+// }
+// Logger.prototype.logWarning = function (text) {
+//     return this.log(text, logLevel.warning)
+// }
+// Logger.prototype.logError = function (text) {
+//     return this.log(text, logLevel.error)
+// }
 
 function prefix(level, namespace, color) {
     var currentdate = new Date();
