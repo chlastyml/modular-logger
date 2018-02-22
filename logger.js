@@ -4,6 +4,7 @@ exports.Logger = Logger;
 
 /* Enums */
 
+var logLevel = enums.logLevel;
 var colorReset = enums.colorReset;
 var specials = enums.specials;
 var fgColors = enums.fgColors;
