@@ -8,10 +8,9 @@ exports.Logger = Logger;
 /* ************************************************** */
 
 /* LOGGER main class */
-function Logger(namespace, color = enums.fgColors.white, minLevelToLog = enums.logLevel.info) {
+function Logger(namespace, minLevelToLog = enums.logLevel.info) {
     this.namespace = namespace;
     this.minLevelToLog = minLevelToLog;
-    this.color = helper.convertColor(color);
     this.prefixMethod = defaultMethods.prefix;
     this.logMethod = defaultMethods.logMethod;
 }
