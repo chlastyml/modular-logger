@@ -1,6 +1,13 @@
 const main = require("./index");
 
-var logger = main.GetLogger();
+const helper = require("./helper");
+const enums = require("./enums");
+
+var namespace = helper.colorText("O365", [main.GetFgColor('red')]);
+
+var logger = main.GetLogger(namespace);
+
+console.log("**** START TESTS ****");
 
 logger.log("Testovaci log");
 logger.logTrace("TRACE log");
