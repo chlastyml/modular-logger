@@ -1,4 +1,4 @@
-const enums = require("./enums");
+require("./logger");
 
 var loggers = [];
 
