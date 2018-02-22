@@ -19,10 +19,7 @@ exports.samelength = (text) => {
     if (text.length < maxChar) {
         var rozdil = maxChar - text.length;
         var index;
-        for (index = 0; index < Math.trunc(rozdil / 2); index++) {
-            text = " " + text + " ";
-        }
-        if (rozdil % 2) {
+        for (index = 0; index < rozdil; index++) {
             text = text + " ";
         }
     }
