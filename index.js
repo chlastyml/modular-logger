@@ -7,6 +7,7 @@ exports.Logger = internLogger;
 var internLogger = new loggerModule.Logger(helper.colorText("Logger", [enums.specials.reverse]), enums.logLevel.info);
 
 var loggers = [];
+loggers[options.defaultNamespace.toLowerCase()] = new loggerModule.Logger(options.defaultNamespace);
 
 exports.CreateLogger = (namespace, args, minLevelToLog = enums.logLevel.trace) => {
     var resultLogger = loggers[namespace.toLowerCase()];
