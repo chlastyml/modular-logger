@@ -24,6 +24,10 @@ exports.CreateLogger = (namespace, args, minLevelToLog = enums.logLevel.trace) =
     return resultLogger;
 }
 
+exports.GetAllLoggers = () => {
+    return loggers;
+}
+
 exports.GetLogger = (namespace, minLevelToLog = enums.logLevel.trace) => {
     var resultLogger = loggers[namespace];
 
