@@ -1,6 +1,6 @@
 {
   "name": "modular-logger",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Simple logger for all",
   "main": "index.js",
   "scripts": {
