@@ -16,6 +16,10 @@ function Logger(namespace, minLevelToLog = enums.logLevel.trace) {
 /* ************************************************** */
 
 /* Set methods */
+Logger.prototype.setNamespace = function (newNamespace) {
+    this.namespace = newNamespace;
+}
+
 Logger.prototype.setMinLevelLog = function (minLevelLogInput) {
     var minLevelLog = enums.convertLevelLog(minLevelLogInput);
     this.minLevelToLog = minLevelLog;
@@ -25,6 +29,22 @@ Logger.prototype.setLogMethod = function (newLogMethod) {
     this.logMethod = newLogMethod;
 }
 Logger.prototype.setPrefixMethod = function (newPrefixMethod) {
+    this.prefixMethod = newPrefixMethod;
+}
+/* ************************************************** */
+/* Get methods */
+Logger.prototype.getNamespace = function () {
+    return this.namespace;
+}
+
+Logger.prototype.getMinLevelLog = function () {
+    return this.minLevelToLog;
+}
+
+Logger.prototype.getLogMethod = function () {
+    this.logMethod = newLogMethod;
+}
+Logger.prototype.getPrefixMethod = function () {
     this.prefixMethod = newPrefixMethod;
 }
 /* ************************************************** */
@@ -56,6 +76,13 @@ Logger.prototype.logError = function (text) {
     return this.log(text, enums.logLevel.error)
 }
 /* ************************************************** */
+
+Logger.prototype.show = function (){
+    var result = new Object;
+    result.name = this.namespace;
+    result.minLevelToLog = this.minLevelToLog;
+    return JSON.stringify(result);
+}
 
 Logger.prototype.toString = function () {
     var result = new Object;
