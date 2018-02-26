@@ -56,3 +56,10 @@ Logger.prototype.logError = function (text) {
     return this.log(text, enums.logLevel.error)
 }
 /* ************************************************** */
+
+Logger.prototype.toString = function () {
+    var result = new Object;
+    result.name = this.namespace;
+    result.minLevelToLog = this.minLevelToLog;
+    return JSON.stringify(result);
+}
