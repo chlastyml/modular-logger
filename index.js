@@ -3,19 +3,17 @@ const loggerModule = require("./logger");
 const helper = require('./helper');
 
 var loggers = [];
-exports.Logger =  new loggerModule.Logger(helper.colorText("Logger", [enums.specials.reverse]), enums.logLevel.info);
+exports.Logger = new loggerModule.Logger(helper.colorText("Logger", [enums.specials.reverse]), enums.logLevel.info);
 
 exports.CreateLogger = (namespace, args, minLevelToLog = enums.logLevel.trace) => {
     var resultLogger = loggers[namespace];
 
-    if(resultLogger){
-        this.Logger.logWarning("Logger " + namespace + " already exist!");
-        return resultLogger;
+    if (resultLogger) {
+        throw new Error("Logger " + namespace + " already exist!");
     }
 
     var modificateNamespace = helper.colorText(namespace, args);
 
-    //console.log(modificateNamespace, minLevelToLog)
     resultLogger = new loggerModule.Logger(modificateNamespace, minLevelToLog);
     loggers[namespace] = resultLogger;
 
@@ -28,13 +26,11 @@ exports.GetAllLoggers = () => {
     return loggers;
 }
 
-exports.GetLogger = (namespace, minLevelToLog = enums.logLevel.trace) => {
+exports.GetLogger = (namespace) => {
     var resultLogger = loggers[namespace];
 
     if (!resultLogger) {
-        this.Logger.logWarning("Logger " + namespace + " doesn't exist!");        
-        resultLogger = new loggerModule.Logger(namespace, minLevelToLog);
-        loggers[namespace] = resultLogger;
+        throw new Error("Logger " + namespace + " doesn't exist!");
     }
 
     return resultLogger;

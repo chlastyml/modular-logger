@@ -68,10 +68,11 @@ exports.convertSpecials = (input) => {
     return result ? result : "";
 }
 
-function convertEnum(input, enumInput){
+exports.convertEnum = function (input, enumInput, throwError = false){
     var result = enumInput.get(input);
-    if(!result){
-        main.Logger.logWarning(input + " not found in " + enumInput.name + " enum");
+    
+    if(!result && throwError){
+        throw new Error(input + " not found in " + enumInput.name + " enum");
     }
 
     return result;

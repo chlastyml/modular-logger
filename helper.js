@@ -6,24 +6,24 @@ exports.buildPrefix = (args) => {
 
 exports.buildDatetime = () => {
     var currentdate = new Date();
+
+    var hours = currentdate.getHours();
+    var minutes = currentdate.getMinutes();
+    var seconds = currentdate.getSeconds();
+
+    console.log(minutes.length);
+
+    var hoursString = hours.length == 1 ? "0" + hours : hours;
+    var minutesString = minutes.length == 1 ? "0" + minutes : minutes;
+    var secondsString = seconds.length == 1 ? "0" + seconds : seconds;
+
     var datetime = currentdate.getDate() + "/" +
         (currentdate.getMonth() + 1) + "/" +
-        currentdate.getFullYear() + " @ " +
-        currentdate.getHours() + ":" +
-        currentdate.getMinutes() + ":" +
-        currentdate.getSeconds();
+        currentdate.getFullYear() + " " +
+        hoursString + ":" +
+        minutesString + ":" +
+        secondsString ;
     return datetime;
-}
-
-exports.samelength = (text) => {
-    if (text.length < maxChar) {
-        var rozdil = maxChar - text.length;
-        var index;
-        for (index = 0; index < rozdil; index++) {
-            text = text + " ";
-        }
-    }
-    return text;
 }
 
 exports.getModificatorsForLevel = (level) => {

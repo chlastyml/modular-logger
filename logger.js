@@ -21,7 +21,8 @@ Logger.prototype.setNamespace = function (newNamespace) {
 }
 
 Logger.prototype.setMinLevelLog = function (minLevelLogInput) {
-    var minLevelLog = enums.convertLevelLog(minLevelLogInput);
+    var minLevelLog = enums.convertEnum(minLevelLogInput, enums.logLevel, true);
+
     this.minLevelToLog = minLevelLog;
 }
 
