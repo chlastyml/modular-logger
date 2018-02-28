@@ -7,22 +7,26 @@ exports.buildPrefix = (args) => {
 exports.buildDatetime = () => {
     var currentdate = new Date();
 
+    var days = currentdate.getDate();
+    var month = currentdate.getMonth() + 1;
+
     var hours = currentdate.getHours();
     var minutes = currentdate.getMinutes();
     var seconds = currentdate.getSeconds();
 
-    console.log(minutes.length);
+    var daysString = days.toString().length == 1 ? "0" + days : days;
+    var monthString = month.toString().length == 1 ? "0" + month : month;
 
-    var hoursString = hours.length == 1 ? "0" + hours : hours;
-    var minutesString = minutes.length == 1 ? "0" + minutes : minutes;
-    var secondsString = seconds.length == 1 ? "0" + seconds : seconds;
+    var hoursString = hours.toString().length == 1 ? "0" + hours : hours;
+    var minutesString = minutes.toString().length == 1 ? "0" + minutes : minutes;
+    var secondsString = seconds.toString().length == 1 ? "0" + seconds : seconds;
 
-    var datetime = currentdate.getDate() + "/" +
-        (currentdate.getMonth() + 1) + "/" +
+    var datetime = daysString + "/" +
+        monthString + "/" +
         currentdate.getFullYear() + " " +
         hoursString + ":" +
         minutesString + ":" +
-        secondsString ;
+        secondsString;
     return datetime;
 }
 
