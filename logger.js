@@ -27,9 +27,15 @@ Logger.prototype.setMinLevelLog = function (minLevelLogInput) {
 }
 
 Logger.prototype.setLogMethod = function (newLogMethod) {
+    if(typeof newLogMethod !== 'function'){
+        throw new Error("New method must be function!");
+    }
     this.logMethod = newLogMethod;
 }
 Logger.prototype.setPrefixMethod = function (newPrefixMethod) {
+    if(typeof newPrefixMethod !== 'function'){
+        throw new Error("New method must be function!");
+    }
     this.prefixMethod = newPrefixMethod;
 }
 /* ************************************************** */
