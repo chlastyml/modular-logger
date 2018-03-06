@@ -17,6 +17,7 @@
     "url": "git://github.com/chlastyml/modular-logger.git"
   },
   "dependencies": {
+    "colors": "^1.1.2",
     "enum": "^2.5.0"
   }
 }
