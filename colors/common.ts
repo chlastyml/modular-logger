@@ -1,6 +1,7 @@
 import { colorText } from "./_colors";
 
-const comonColor = {
+export const comonRawColor = {
+    Reset: "\x1b[0m",
     Bright: "\x1b[1m",
     Dim: "\x1b[2m",
     Underscore: "\x1b[4m",
@@ -10,22 +11,22 @@ const comonColor = {
 }
 
 const cBringht = (text: string): string => {
-    return colorText(text, comonColor.Bright);
+    return colorText(text, comonRawColor.Bright);
 }
 const cDim = (text: string): string => {
-    return colorText(text, comonColor.Dim);
+    return colorText(text, comonRawColor.Dim);
 }
 const cUnderscore = (text: string): string => {
-    return colorText(text, comonColor.Underscore);
+    return colorText(text, comonRawColor.Underscore);
 }
 const cBlink = (text: string): string => {
-    return colorText(text, comonColor.Blink);
+    return colorText(text, comonRawColor.Blink);
 }
 const cReverse = (text: string): string => {
-    return colorText(text, comonColor.Reverse);
+    return colorText(text, comonRawColor.Reverse);
 }
 const cHidden = (text: string): string => {
-    return colorText(text, comonColor.Hidden);
+    return colorText(text, comonRawColor.Hidden);
 }
 
 export default {

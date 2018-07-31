@@ -12,7 +12,7 @@ export class Logger {
     logMethod: Function;
 
     constructor(namespace: string, minLevelToLog = logLevel.trace) {
-        this.namespace = namespace;
+        this.namespace =  helper.clearText(namespace);
         this.logNamespace = namespace
         this.minLevelToLog = minLevelToLog;
         this.prefixMethod = defaultMethods.prefix;
@@ -62,11 +62,15 @@ export class Logger {
     /* Log methods */
     log(text: string, level: logLevel = logLevel.info) {
         return new Promise((resolve, reject) => {
-            if (this.minLevelToLog <= level) {
-                var prefixText = this.prefixMethod(level, this.logNamespace);
-                this.logMethod(prefixText, text);
+            try {
+                if (this.minLevelToLog <= level) {
+                    var prefixText = this.prefixMethod(level, this.logNamespace);
+                    this.logMethod(prefixText, text);
+                }
+                resolve(true);
+            } catch (e) {
+                reject(e);
             }
-            resolve(true);
         });
     }
 

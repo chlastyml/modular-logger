@@ -1,6 +1,6 @@
 {
   "name": "modular-logger",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Simple logger for all",
   "main": "dist/endpoint.js",
   "types": "dist/endpoint.d.ts",

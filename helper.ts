@@ -1,7 +1,7 @@
 import { logLevel } from './enums';
-import fgColors from './colors/fgColors';
-import common from './colors/common';
-import bgColors from './colors/bgColors';
+import fgColors, { fgRawColors } from './colors/fgColors';
+import common, { comonRawColor } from './colors/common';
+import bgColors, { bgRawColors } from './colors/bgColors';
 
 export const buildPrefix = (args: Array<string>) => {
     return args.join(':');
@@ -50,4 +50,21 @@ export const colorLevel = (level: logLevel) => {
     }
 
     console.log("Error pri ziskavani modifikatoru textu u loggeru");
+}
+
+export const clearText = (text: string) => {
+    const fgValues: string[] = (<any>Object).values(fgRawColors);
+    text = replaceString(text, fgValues);
+    const bgValues: string[] = (<any>Object).values(bgRawColors);
+    text = replaceString(text, bgValues);
+    const commonValues: string[] = (<any>Object).values(comonRawColor);
+    text = replaceString(text, commonValues);
+    return text;
+}
+
+const replaceString = (text: string, arrayString: Array<string>): string => {
+    arrayString.forEach(val => {
+        if (text.indexOf(val) > -1) text = text.replace(val, '');
+    });
+    return text;
 }

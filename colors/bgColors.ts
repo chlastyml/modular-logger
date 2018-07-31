@@ -1,6 +1,6 @@
 import { colorText } from "./_colors";
 
-const bgColors = {
+export const bgRawColors = {
     Black: "\x1b[40m",
     Red: "\x1b[41m",
     Green: "\x1b[42m",
@@ -12,28 +12,28 @@ const bgColors = {
 }
 
 const bgBlack = (text: string): string => {
-    return colorText(text, bgColors.Black);
+    return colorText(text, bgRawColors.Black);
 }
 const bgRed = (text: string): string => {
-    return colorText(text, bgColors.Red);
+    return colorText(text, bgRawColors.Red);
 }
 const bgGreen = (text: string): string => {
-    return colorText(text, bgColors.Green);
+    return colorText(text, bgRawColors.Green);
 }
 const bgYellow = (text: string): string => {
-    return colorText(text, bgColors.Yellow);
+    return colorText(text, bgRawColors.Yellow);
 }
 const bgBlue = (text: string): string => {
-    return colorText(text, bgColors.Blue);
+    return colorText(text, bgRawColors.Blue);
 }
 const bgMagenta = (text: string): string => {
-    return colorText(text, bgColors.Magenta);
+    return colorText(text, bgRawColors.Magenta);
 }
 const bgCyan = (text: string): string => {
-    return colorText(text, bgColors.Cyan);
+    return colorText(text, bgRawColors.Cyan);
 }
 const bgWhite = (text: string): string => {
-    return colorText(text, bgColors.White);
+    return colorText(text, bgRawColors.White);
 }
 
 export default {

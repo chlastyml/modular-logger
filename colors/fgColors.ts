@@ -1,6 +1,6 @@
 import { colorText } from "./_colors";
 
-const fgColors = {
+export const fgRawColors = {
     Black: "\x1b[30m",
     Red: "\x1b[31m",
     Green: "\x1b[32m",
@@ -12,28 +12,28 @@ const fgColors = {
 }
 
 const fgBlack = (text: string): string => {
-    return colorText(text, fgColors.Black);
+    return colorText(text, fgRawColors.Black);
 }
 const fgRed = (text: string): string => {
-    return colorText(text, fgColors.Red);
+    return colorText(text, fgRawColors.Red);
 }
 const fgGreen = (text: string): string => {
-    return colorText(text, fgColors.Green);
+    return colorText(text, fgRawColors.Green);
 }
 const fgYellow = (text: string): string => {
-    return colorText(text, fgColors.Yellow);
+    return colorText(text, fgRawColors.Yellow);
 }
 const fgBlue = (text: string): string => {
-    return colorText(text, fgColors.Blue);
+    return colorText(text, fgRawColors.Blue);
 }
 const fgMagenta = (text: string): string => {
-    return colorText(text, fgColors.Magenta);
+    return colorText(text, fgRawColors.Magenta);
 }
 const fgCyan = (text: string): string => {
-    return colorText(text, fgColors.Cyan);
+    return colorText(text, fgRawColors.Cyan);
 }
 const fgWhite = (text: string): string => {
-    return colorText(text, fgColors.White);
+    return colorText(text, fgRawColors.White);
 }
 
 export default {
