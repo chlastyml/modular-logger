@@ -5,31 +5,48 @@ import fgColors from './colors/fgColors';
 import common from './colors/common';
 import bgColors from './colors/bgColors';
 import { clear_Text } from "./helper";
+import { prefix, prefix_Without_Color, log_Method } from "./loggerDefaultMethod";
 
 // In this file is all public method
 
-export const CreateLogger = Create_Logger;
-export const GetAllLoggers = Get_All_Loggers;
-export const GetLogger = Get_Logger;
+const CreateLogger = Create_Logger;
+const GetAllLoggers = Get_All_Loggers;
+const GetLogger = Get_Logger;
 
-export const LogLevel = logLevel;
+const LogLevel = logLevel;
 
-export const FgColors = fgColors;
-export const BgColors = bgColors;
-export const TextFeature = common;
+const FgColors = fgColors;
+const BgColors = bgColors;
+const TextFeature = common;
 
-export const clearText = clear_Text;
+const clearText = clear_Text;
+
+const prefixMethod = prefix;
+const prefixWithoutColorMethod = prefix_Without_Color;
+const logMethod = log_Method;
+
 
 export default {
-    CreateLogger,
-    GetAllLoggers,
-    GetLogger,
+    Loggers: {
+        CreateLogger,
+        GetAllLoggers,
+        GetLogger
+    },
 
     LogLevel,
 
-    FgColors,
-    BgColors,
-    TextFeature,
+    Text: {
+        FgColors,
+        BgColors,
+        TextFeature,
+    },
 
-    clearText
+    Methods: {
+        clearText,
+        loggers: {
+            prefixMethod,
+            prefixWithoutColorMethod,
+            logMethod
+        }
+    }
 }

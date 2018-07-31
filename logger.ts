@@ -6,17 +6,15 @@ import { logLevel } from "./enums";
 
 export class Logger {
     namespace: string;
-    logNamespace: string;
     minLevelToLog: logLevel;
     prefixMethod: Function;
     logMethod: Function;
 
     constructor(namespace: string, minLevelToLog = logLevel.trace) {
         this.namespace =  helper.clear_Text(namespace);
-        this.logNamespace = namespace
         this.minLevelToLog = minLevelToLog;
         this.prefixMethod = defaultMethods.prefix;
-        this.logMethod = defaultMethods.logMethod;
+        this.logMethod = defaultMethods.log_Method;
     }
     /* Set methods */
     setNamespace(newNamespace: string) {
@@ -64,7 +62,7 @@ export class Logger {
         return new Promise((resolve, reject) => {
             try {
                 if (this.minLevelToLog <= level) {
-                    var prefixText = this.prefixMethod(level, this.logNamespace);
+                    var prefixText = this.prefixMethod(level, this.namespace);
                     this.logMethod(prefixText, text);
                 }
                 resolve(true);
