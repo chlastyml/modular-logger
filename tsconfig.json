@@ -4,7 +4,7 @@
       "outDir": "dist",
       "baseUrl": "/",
       "sourceMap": false,
-      "declaration": false,
+      "declaration": true,
       "module": "commonjs",
       "moduleResolution": "node",
       "emitDecoratorMetadata": true,
@@ -23,6 +23,7 @@
     },
     "exclude": [
       "node_modules",
+      "dist",
       "_old",
       "**/*.spec.ts"
     ]
