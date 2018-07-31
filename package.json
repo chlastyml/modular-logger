@@ -1,6 +1,6 @@
 {
   "name": "modular-logger",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Simple logger for all",
   "main": "index.js",
   "scripts": {
@@ -15,5 +15,8 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/chlastyml/modular-logger.git"
+  },
+  "dependencies": {
+    "typescript": "^3.0.1"
   }
 }
