@@ -5,7 +5,7 @@ import common from './colors/common';
 const loggers: Array<Logger> = [];
 const Default_Logger: Logger = new Logger(common.Inverse("Logger"), logLevel.trace);
 
-export const CreateLogger = (namespace: string, minLevelToLog: logLevel = logLevel.trace): Logger => {
+export const Create_Logger = (namespace: string, minLevelToLog: logLevel = logLevel.trace): Logger => {
     var resultLogger = loggers.find(log => log.getNamespace() === namespace);
 
     if (resultLogger) {
@@ -20,11 +20,11 @@ export const CreateLogger = (namespace: string, minLevelToLog: logLevel = logLev
     return resultLogger;
 }
 
-export const GetAllLoggers = (): Array<Logger> => {
+export const Get_All_Loggers = (): Array<Logger> => {
     return loggers;
 }
 
-export const GetLogger = (namespace?: string): Logger => {
+export const Get_Logger = (namespace?: string): Logger => {
     if (namespace) {
         var resultLogger = loggers.find(log => log.getNamespace() === namespace);
 
@@ -36,10 +36,4 @@ export const GetLogger = (namespace?: string): Logger => {
     }else{
         return Default_Logger;
     }
-}
-
-export default {
-    CreateLogger,
-    GetAllLoggers,
-    GetLogger
 }

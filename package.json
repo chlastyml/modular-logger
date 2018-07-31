@@ -1,9 +1,9 @@
 {
   "name": "modular-logger",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Simple logger for all",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/endpoint.js",
+  "types": "dist/endpoint.d.ts",
   "scripts": {
     "build": "tsc"
   },
