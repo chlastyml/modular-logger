@@ -52,7 +52,7 @@ export const colorLevel = (level: logLevel) => {
     console.log("Error pri ziskavani modifikatoru textu u loggeru");
 }
 
-export const clearText = (text: string) => {
+export const clear_Text = (text: string) => {
     const fgValues: string[] = (<any>Object).values(fgRawColors);
     text = replaceString(text, fgValues);
     const bgValues: string[] = (<any>Object).values(bgRawColors);

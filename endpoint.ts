@@ -4,6 +4,7 @@ import { logLevel } from "./enums";
 import fgColors from './colors/fgColors';
 import common from './colors/common';
 import bgColors from './colors/bgColors';
+import { clear_Text } from "./helper";
 
 // In this file is all public method
 
@@ -17,6 +18,8 @@ export const FgColors = fgColors;
 export const BgColors = bgColors;
 export const TextFeature = common;
 
+export const clearText = clear_Text;
+
 export default {
     CreateLogger,
     GetAllLoggers,
@@ -26,5 +29,7 @@ export default {
 
     FgColors,
     BgColors,
-    TextFeature
+    TextFeature,
+
+    clearText
 }

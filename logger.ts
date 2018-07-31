@@ -12,7 +12,7 @@ export class Logger {
     logMethod: Function;
 
     constructor(namespace: string, minLevelToLog = logLevel.trace) {
-        this.namespace =  helper.clearText(namespace);
+        this.namespace =  helper.clear_Text(namespace);
         this.logNamespace = namespace
         this.minLevelToLog = minLevelToLog;
         this.prefixMethod = defaultMethods.prefix;
