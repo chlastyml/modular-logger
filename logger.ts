@@ -1,20 +1,24 @@
-import * as defaultMethods from "./loggerDefaultMethod";
 import * as helper from './helper';
 import { logLevel } from "./enums";
+import { prefix } from './loggerDefaultMethod';
 
+export interface IMessage {
+    namespace: string;
+    date: Date;
+    level: logLevel;
+    message: string;
+}
 /* ************************************************** */
 
 export class Logger {
     namespace: string;
     minLevelToLog: logLevel;
-    prefixMethod: Function;
-    logMethod: Function;
+    logMethods: Function;
 
-    constructor(namespace: string, minLevelToLog = logLevel.trace) {
-        this.namespace =  helper.clear_Text(namespace);
+    constructor(namespace: string, minLevelToLog = logLevel.Trace) {
+        this.namespace = helper.clear_Text(namespace);
         this.minLevelToLog = minLevelToLog;
-        this.prefixMethod = defaultMethods.prefix;
-        this.logMethod = defaultMethods.log_Method;
+        this.logMethods = logToConsole;
     }
     /* Set methods */
     setNamespace(newNamespace: string) {
@@ -29,14 +33,7 @@ export class Logger {
         if (typeof newLogMethod !== 'function') {
             throw new Error("New method must be function!");
         }
-        this.logMethod = newLogMethod;
-        return this;
-    }
-    setPrefixMethod(newPrefixMethod: Function) {
-        if (typeof newPrefixMethod !== 'function') {
-            throw new Error("New method must be function!");
-        }
-        this.prefixMethod = newPrefixMethod;
+        this.logMethods = newLogMethod;
         return this;
     }
     /* ************************************************** */
@@ -51,21 +48,29 @@ export class Logger {
     }
 
     getLogMethod(): Function {
-        return this.logMethod;
-    }
-    getPrefixMethod(): Function {
-        return this.prefixMethod;
+        return this.logMethods;
     }
     /* ************************************************** */
+
+    private createMessage(text: string, level: logLevel): IMessage {
+        return {
+            namespace: this.namespace,
+            level,
+            date: new Date(),
+            message: text
+        }
+    }
+
     /* Log methods */
-    log(text: string, level: logLevel = logLevel.info) {
+    log(logText: string, level: logLevel = logLevel.Info) {
         return new Promise((resolve, reject) => {
             try {
                 if (this.minLevelToLog <= level) {
-                    var prefixText = this.prefixMethod(level, this.namespace);
-                    this.logMethod(prefixText, text);
+                    logText = logText ? logText : ''; // can be undefined?
+                    const message = this.createMessage(logText, level);
+                    this.logMethods(message);
+                    resolve(message);
                 }
-                resolve(true);
             } catch (e) {
                 reject(e);
             }
@@ -73,19 +78,19 @@ export class Logger {
     }
 
     logTrace(text: string) {
-        return this.log(text, logLevel.trace)
+        return this.log(text, logLevel.Trace)
     }
     logDebug(text: string) {
-        return this.log(text, logLevel.debug)
+        return this.log(text, logLevel.Debug)
     }
     logInfo(text: string) {
-        return this.log(text, logLevel.info)
+        return this.log(text, logLevel.Info)
     }
     logWarning(text: string) {
-        return this.log(text, logLevel.warning)
+        return this.log(text, logLevel.Warning)
     }
     logError(text: string) {
-        return this.log(text, logLevel.error)
+        return this.log(text, logLevel.Error)
     }
     /* ************************************************** */
     toString() {
@@ -96,9 +101,7 @@ export class Logger {
     }
 }
 
-
-
-
-
-
-
+function logToConsole(message: IMessage): void {
+    const sPrefix = prefix(message, true);
+    console.log(`${sPrefix} => ${message.message}`);
+}

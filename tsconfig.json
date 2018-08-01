@@ -25,6 +25,8 @@
       "node_modules",
       "dist",
       "_old",
-      "**/*.spec.ts"
+      "**/*.spec.ts",
+      "test",
+      "tests",
     ]
   }

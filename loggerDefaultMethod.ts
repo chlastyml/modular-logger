@@ -1,26 +1,33 @@
+import { IMessage } from "./logger";
+import bgColors from "./colors/bgColors";
 import * as helper from './helper';
-import { logLevel } from './enums';
-import bgColors from './colors/bgColors';
+import { logLevel } from "./enums";
 
-export const prefix = (level: logLevel, namespace: string) => {
-    var levelComplete = helper.colorLevel(level);
-    var datetime = level == logLevel.error ? bgColors.Red(helper.buildDatetime()) : helper.buildDatetime();
+// Max length of enum level
+const maxLength = Math.max(...Object.keys(logLevel).filter(k => typeof logLevel[k as any] === "number").map(el => el.length));
+export function prefix(message: IMessage, colored: boolean = false) {
+    let sLevel = completeWhiteSpace(logLevel[message.level], maxLength);
+    sLevel = colored ? helper.colorLevel(message.level, sLevel) : sLevel;
 
-    var prefix = !namespace ? helper.buildPrefix([levelComplete, datetime]) : helper.buildPrefix([levelComplete, namespace, datetime]);
+    const currentTime = message.date.toISOString();
+    // const currentTime = helper.buildDatetime(message.date);
+    const sDate = message.level == logLevel.Error && colored ? bgColors.Red(currentTime) : currentTime;
 
-    return prefix + ' - ';
+    // TODO: colored namespace?
+    const sNamespace = colored ? message.namespace : message.namespace;
+
+    const prefix = buildPrefix(sLevel, sNamespace, sDate);
+
+    return prefix;
 }
 
-export const prefix_Without_Color = (level: logLevel, namespace: string) => {
-    var levelComplete =  logLevel[level];
-    var datetime = level == logLevel.error ? bgColors.Red(helper.buildDatetime()) : helper.buildDatetime();
-
-    var prefix = !namespace ? helper.buildPrefix([levelComplete, datetime]) : helper.buildPrefix([levelComplete, namespace, datetime]);
-
-    return prefix + ' - ';
+function buildPrefix(level: string, namespace: string, date: string): string {
+    return !namespace && !namespace.trim() ? `${level} : ${date}` : `${level} : ${date} : ${namespace}`;
 }
 
-export const log_Method = (prefix: string, logText: string) => {
-    logText = logText ? logText : ''; // can be undefined?
-    console.log(prefix + logText);
+function completeWhiteSpace(text: string, maxLength: number): string{
+    if(text.length < maxLength){
+        return completeWhiteSpace(text + ' ', maxLength);
+    }
+    return text;
 }

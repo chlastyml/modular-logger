@@ -3,9 +3,9 @@ import { logLevel } from './enums';
 import common from './colors/common';
 
 const loggers: Array<Logger> = [];
-const Default_Logger: Logger = new Logger(common.Inverse("Logger"), logLevel.trace);
+const Default_Logger: Logger = new Logger(common.Inverse("Logger"), logLevel.Trace);
 
-export const Create_Logger = (namespace: string, minLevelToLog: logLevel = logLevel.trace): Logger => {
+export const Create_Logger = (namespace: string, minLevelToLog: logLevel = logLevel.Trace): Logger => {
     var resultLogger = loggers.find(log => log.getNamespace() === namespace);
 
     if (resultLogger) {

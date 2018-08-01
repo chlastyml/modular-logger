@@ -7,24 +7,22 @@ export const buildPrefix = (args: Array<string>) => {
     return args.join(':');
 }
 
-export const buildDatetime = () => {
-    var currentdate = new Date();
+export const buildDatetime = (currentdate: Date) => {
+    const days = currentdate.getDate();
+    const month = currentdate.getMonth() + 1;
 
-    var days = currentdate.getDate();
-    var month = currentdate.getMonth() + 1;
+    const hours = currentdate.getHours();
+    const minutes = currentdate.getMinutes();
+    const seconds = currentdate.getSeconds();
 
-    var hours = currentdate.getHours();
-    var minutes = currentdate.getMinutes();
-    var seconds = currentdate.getSeconds();
+    const daysString = days.toString().length == 1 ? "0" + days : days;
+    const monthString = month.toString().length == 1 ? "0" + month : month;
 
-    var daysString = days.toString().length == 1 ? "0" + days : days;
-    var monthString = month.toString().length == 1 ? "0" + month : month;
+    const hoursString = hours.toString().length == 1 ? "0" + hours : hours;
+    const minutesString = minutes.toString().length == 1 ? "0" + minutes : minutes;
+    const secondsString = seconds.toString().length == 1 ? "0" + seconds : seconds;
 
-    var hoursString = hours.toString().length == 1 ? "0" + hours : hours;
-    var minutesString = minutes.toString().length == 1 ? "0" + minutes : minutes;
-    var secondsString = seconds.toString().length == 1 ? "0" + seconds : seconds;
-
-    var datetime = daysString + "/" +
+    const datetime = daysString + "/" +
         monthString + "/" +
         currentdate.getFullYear() + " " +
         hoursString + ":" +
@@ -33,20 +31,20 @@ export const buildDatetime = () => {
     return datetime;
 }
 
-export const colorLevel = (level: logLevel) => {
-    let levelText = logLevel[level];
+export const colorLevel = (level: logLevel, sLevel: string) => {
+    // let levelText = logLevel[level];
 
     switch (level) {
-        case logLevel.trace:
-            return levelText;
-        case logLevel.debug:
-            return fgColors.Magneta(levelText);
-        case logLevel.info:
-            return fgColors.Green(levelText);
-        case logLevel.warning:
-            return fgColors.Yellow(levelText);
-        case logLevel.error:
-            return common.Bold(bgColors.Red(levelText));
+        case logLevel.Trace:
+            return sLevel;
+        case logLevel.Debug:
+            return fgColors.Magneta(sLevel);
+        case logLevel.Info:
+            return fgColors.Green(sLevel);
+        case logLevel.Warning:
+            return fgColors.Yellow(sLevel);
+        case logLevel.Error:
+            return common.Bold(bgColors.Red(sLevel));
     }
 
     console.log("Error pri ziskavani modifikatoru textu u loggeru");

@@ -5,7 +5,7 @@ import fgColors from './colors/fgColors';
 import common from './colors/common';
 import bgColors from './colors/bgColors';
 import { clear_Text } from "./helper";
-import { prefix, prefix_Without_Color, log_Method } from "./loggerDefaultMethod";
+import { prefix } from "./loggerDefaultMethod";
 
 // In this file is all public method
 
@@ -22,8 +22,6 @@ const TextFeature = common;
 const clearText = clear_Text;
 
 const prefixMethod = prefix;
-const prefixWithoutColorMethod = prefix_Without_Color;
-const logMethod = log_Method;
 
 
 export default {
@@ -44,9 +42,7 @@ export default {
     Methods: {
         clearText,
         loggers: {
-            prefixMethod,
-            prefixWithoutColorMethod,
-            logMethod
+            prefixMethod
         }
     }
 }
