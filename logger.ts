@@ -10,17 +10,15 @@ export interface IMessage {
 }
 /* ************************************************** */
 
-export class Logger {
+class BaseLogger {
     namespace: string;
     minLevelToLog: logLevel;
-    logMethods: Function[] = [];
 
-    constructor(namespace: string, minLevelToLog = logLevel.Trace, defaultLogMethod: Function = logToConsole) {
+    constructor(namespace: string, minLevelToLog = logLevel.Trace) {
         this.namespace = helper.clear_Text(namespace);
         this.minLevelToLog = minLevelToLog;
-        this.logMethods.push(defaultLogMethod);
     }
-    /* Set methods */
+
     setNamespace(newNamespace: string) {
         this.namespace = newNamespace;
         return this;
@@ -30,7 +28,39 @@ export class Logger {
         return this;
     }
 
-    clearLogMethod(){
+    getNamespace(): string {
+        return this.namespace;
+    }
+
+    getMinLevelLog(): logLevel {
+        return this.minLevelToLog;
+    }
+
+    protected createMessage(text: string, level: logLevel): IMessage {
+        return {
+            namespace: this.namespace,
+            level,
+            date: new Date(),
+            message: text
+        }
+    }
+
+    toString() {
+        return JSON.stringify({
+            name: this.namespace,
+            minLevelToLog: this.minLevelToLog
+        }, null, 4);
+    }
+}
+
+export class Logger extends BaseLogger {
+    logMethods: Function[] = [];
+    constructor(namespace: string, minLevelToLog = logLevel.Trace, logMethod?: Function) {
+        super(namespace, minLevelToLog);
+        if (logMethod) this.logMethods.push(logMethod);
+    }
+
+    clearLogMethod() {
         this.logMethods = [];
         return this;
     }
@@ -50,32 +80,11 @@ export class Logger {
         return this;
     }
 
-    /* ************************************************** */
-
-    /* Get methods */
-    getNamespace(): string {
-        return this.namespace;
-    }
-
-    getMinLevelLog(): logLevel {
-        return this.minLevelToLog;
-    }
-
     getLogMethod(): Function[] {
         return this.logMethods;
     }
+
     /* ************************************************** */
-
-    private createMessage(text: string, level: logLevel): IMessage {
-        return {
-            namespace: this.namespace,
-            level,
-            date: new Date(),
-            message: text
-        }
-    }
-
-    /* Log methods */
     log(logText: string, level: logLevel = logLevel.Info) {
         return new Promise((resolve, reject) => {
             try {
@@ -83,10 +92,10 @@ export class Logger {
                     logText = logText ? logText : ''; // can be undefined?
                     const message = this.createMessage(logText, level);
                     this.logMethods.forEach(logMethod => {
-                        new Promise((resolve, reject)=> {
-                            try{
+                        new Promise((resolve, reject) => {
+                            try {
                                 resolve(logMethod(message));
-                            }catch(err){
+                            } catch (err) {
                                 reject(err);
                             }
                         });
@@ -113,12 +122,5 @@ export class Logger {
     }
     logError(text: string) {
         return this.log(text, logLevel.Error)
-    }
-    /* ************************************************** */
-    toString() {
-        return JSON.stringify({
-            name: this.namespace,
-            minLevelToLog: this.minLevelToLog
-        }, null, 4);
     }
 }
