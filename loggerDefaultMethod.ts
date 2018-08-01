@@ -24,7 +24,7 @@ export function prefix(message: IMessage, colored: boolean = false) {
 }
 
 function buildPrefix(level: string, namespace: string, date: string): string {
-    return !namespace && !namespace.trim() ? `${level} : ${date} : ${process.getgid()}` : `${level} : ${date} : ${process.getgid()} : ${namespace}`;
+    return !namespace && !namespace.trim() ? `${level} : ${date}` : `${level} : ${date} : ${namespace}`;
 }
 
 function completeWhiteSpace(text: string, maxLength: number): string {
