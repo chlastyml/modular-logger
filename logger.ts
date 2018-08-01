@@ -1,6 +1,6 @@
 import * as helper from './helper';
 import { logLevel } from "./enums";
-import { prefix } from './loggerDefaultMethod';
+import { logToConsole } from './loggerDefaultMethod';
 
 export interface IMessage {
     namespace: string;
@@ -13,12 +13,12 @@ export interface IMessage {
 export class Logger {
     namespace: string;
     minLevelToLog: logLevel;
-    logMethods: Function;
+    logMethods: Function[] = [];
 
-    constructor(namespace: string, minLevelToLog = logLevel.Trace) {
+    constructor(namespace: string, minLevelToLog = logLevel.Trace, defaultLogMethod: Function = logToConsole) {
         this.namespace = helper.clear_Text(namespace);
         this.minLevelToLog = minLevelToLog;
-        this.logMethods = logToConsole;
+        this.logMethods.push(defaultLogMethod);
     }
     /* Set methods */
     setNamespace(newNamespace: string) {
@@ -29,13 +29,27 @@ export class Logger {
         this.minLevelToLog = minLevelLogInput;
         return this;
     }
+
+    clearLogMethod(){
+        this.logMethods = [];
+        return this;
+    }
+    addLogMethod(newLogMethod: Function) {
+        if (typeof newLogMethod !== 'function') {
+            throw new Error("New method must be function!");
+        }
+        this.logMethods.push(newLogMethod);
+        return this;
+    }
     setLogMethod(newLogMethod: Function) {
         if (typeof newLogMethod !== 'function') {
             throw new Error("New method must be function!");
         }
-        this.logMethods = newLogMethod;
+        this.logMethods = [];
+        this.logMethods.push(newLogMethod);
         return this;
     }
+
     /* ************************************************** */
 
     /* Get methods */
@@ -47,7 +61,7 @@ export class Logger {
         return this.minLevelToLog;
     }
 
-    getLogMethod(): Function {
+    getLogMethod(): Function[] {
         return this.logMethods;
     }
     /* ************************************************** */
@@ -68,7 +82,15 @@ export class Logger {
                 if (this.minLevelToLog <= level) {
                     logText = logText ? logText : ''; // can be undefined?
                     const message = this.createMessage(logText, level);
-                    this.logMethods(message);
+                    this.logMethods.forEach(logMethod => {
+                        new Promise((resolve, reject)=> {
+                            try{
+                                resolve(logMethod(message));
+                            }catch(err){
+                                reject(err);
+                            }
+                        });
+                    });
                     resolve(message);
                 }
             } catch (e) {
@@ -99,9 +121,4 @@ export class Logger {
             minLevelToLog: this.minLevelToLog
         }, null, 4);
     }
-}
-
-function logToConsole(message: IMessage): void {
-    const sPrefix = prefix(message, true);
-    console.log(`${sPrefix} => ${message.message}`);
 }

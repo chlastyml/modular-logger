@@ -1,4 +1,6 @@
-import { IMessage } from "./logger";
+import * as endOfLine from 'os';
+import * as fs from 'fs';
+import { IMessage, Logger } from "./logger";
 import bgColors from "./colors/bgColors";
 import * as helper from './helper';
 import { logLevel } from "./enums";
@@ -25,9 +27,38 @@ function buildPrefix(level: string, namespace: string, date: string): string {
     return !namespace && !namespace.trim() ? `${level} : ${date}` : `${level} : ${date} : ${namespace}`;
 }
 
-function completeWhiteSpace(text: string, maxLength: number): string{
-    if(text.length < maxLength){
+function completeWhiteSpace(text: string, maxLength: number): string {
+    if (text.length < maxLength) {
         return completeWhiteSpace(text + ' ', maxLength);
     }
     return text;
+}
+
+export function logToConsole(message: IMessage): void {
+    const sPrefix = prefix(message, true);
+    console.log(`${sPrefix} => ${message.message}`);
+}
+
+export function logToFile(logger: Logger, path: string) {
+    const aaab = new FileLog(path);
+    logger.addLogMethod(((message: any) => {
+        aaab.logToFile(message)
+    }));
+}
+class FileLog {
+    path: string;
+
+    constructor(path: string) {
+        this.path = path;
+    }
+
+    logToFile(message: IMessage): void {
+        const sMessage = `${prefix(message)} - ${message.message}${endOfLine.EOL}`;
+
+        fs.appendFile(this.path, sMessage, function (err) {
+            if (err) {
+                return console.log(err);
+            }
+        });
+    }
 }

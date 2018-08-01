@@ -6,6 +6,7 @@ import common from './colors/common';
 import bgColors from './colors/bgColors';
 import { clear_Text } from "./helper";
 import { prefix } from "./loggerDefaultMethod";
+import { CreateConsoleLogger, CreateFileLogger, CreateConsoleFileLogger } from "./factory";
 
 // In this file is all public method
 
@@ -23,9 +24,13 @@ const clearText = clear_Text;
 
 const prefixMethod = prefix;
 
-
 export default {
     Loggers: {
+        Factory: {
+            CreateConsoleLogger,
+            CreateFileLogger,
+            CreateConsoleFileLogger
+        },
         CreateLogger,
         GetAllLoggers,
         GetLogger
